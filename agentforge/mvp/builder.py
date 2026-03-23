@@ -236,7 +236,7 @@ class MVPBuilder:
             refresh_per_second=10,
         ):
             try:
-                data: dict[str, Any] = ask_json(prompt, system=_SYSTEM_PROMPT)
+                data: dict[str, Any] = ask_json(prompt, system=_SYSTEM_PROMPT, timeout=1200)
             except ValueError as exc:
                 data = self._extract_json_fallback(str(exc), brief, package_name)
 

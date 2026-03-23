@@ -55,13 +55,13 @@ class SurveyAnswers:
         raw_responses: Full free-text answers keyed by question number.
     """
 
-    q1_primary_language: str = ""
+    q1_primary_language: list[str] = field(default_factory=list)
     q2_experience_years: str = ""
     q3_ai_tools: list[str] = field(default_factory=list)
     q4_claude_usage: str = ""
     q5_domain_expertise: str = ""
     q6_second_domain: str = ""
-    q7_pain_point: str = ""
+    q7_pain_point: list[str] = field(default_factory=list)
     q8_dream_tool: str = ""
     q9_available_hours: str = ""
     q10_commitment_level: str = ""
@@ -71,9 +71,9 @@ class SurveyAnswers:
     q14_team_situation: str = ""
     q15_geo_market: str = ""
     q16_open_source_stance: str = ""
-    q17_build_motivation: str = ""
+    q17_build_motivation: list[str] = field(default_factory=list)
     q18_past_project: str = ""
-    q19_biggest_fear: str = ""
+    q19_biggest_fear: list[str] = field(default_factory=list)
     q20_superpower: str = ""
     raw_responses: dict[str, str] = field(default_factory=dict)
 
@@ -116,8 +116,8 @@ QUESTIONS: list[dict[str, Any]] = [
         "id": 1,
         "field": "q1_primary_language",
         "title": "Q1. 주력 프로그래밍 언어",
-        "subtitle": "What is your primary programming language?",
-        "type": "choice",
+        "subtitle": "What are your primary programming languages? (여러 개 선택 가능 — enter numbers separated by commas)",
+        "type": "multi_choice",
         "choices": [
             "Python",
             "TypeScript / JavaScript",
@@ -224,8 +224,8 @@ QUESTIONS: list[dict[str, Any]] = [
         "id": 7,
         "field": "q7_pain_point",
         "title": "Q7. 가장 큰 업무 고통",
-        "subtitle": "What is the single biggest pain point in your daily workflow?",
-        "type": "choice",
+        "subtitle": "What are the biggest pain points in your daily workflow? (여러 개 선택 가능 — enter numbers separated by commas)",
+        "type": "multi_choice",
         "choices": [
             "반복적인 코드 / 보일러플레이트 작성 (Repetitive boilerplate)",
             "문서 작성과 유지관리 (Writing & maintaining docs)",
@@ -379,8 +379,8 @@ QUESTIONS: list[dict[str, Any]] = [
         "id": 17,
         "field": "q17_build_motivation",
         "title": "Q17. 빌딩 동기",
-        "subtitle": "What is your core motivation for building things?",
-        "type": "choice",
+        "subtitle": "What are your core motivations for building things? (여러 개 선택 가능 — enter numbers separated by commas)",
+        "type": "multi_choice",
         "choices": [
             "내 문제를 내가 해결하고 싶어서 (Scratch my own itch)",
             "기술적 챌린지 자체가 즐거워서 (Technical challenge is fun)",
@@ -404,8 +404,8 @@ QUESTIONS: list[dict[str, Any]] = [
         "id": 19,
         "field": "q19_biggest_fear",
         "title": "Q19. 새 제품 빌딩의 가장 큰 두려움",
-        "subtitle": "What is your biggest fear about starting a new product?",
-        "type": "choice",
+        "subtitle": "What are your biggest fears about starting a new product? (여러 개 선택 가능 — enter numbers separated by commas)",
+        "type": "multi_choice",
         "choices": [
             "아무도 안 쓸 것 같아서 (No one will use it)",
             "이미 더 나은 게 있을 것 같아서 (It already exists and is better)",
@@ -514,7 +514,7 @@ class SurveyRunner:
 
         # Store in the right field
         field_name: str = question["field"]
-        if field_name == "q3_ai_tools":
+        if q_type == "multi_choice":
             object.__setattr__(self.answers, field_name, answer if isinstance(answer, list) else [answer])
         else:
             object.__setattr__(self.answers, field_name, answer if isinstance(answer, str) else str(answer))

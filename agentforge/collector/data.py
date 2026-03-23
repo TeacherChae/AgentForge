@@ -451,25 +451,25 @@ class DataCollector:
             try:
                 return ask_json(prompt, system=_BRIEF_SYSTEM_PROMPT)  # type: ignore[no-any-return]
             except ValueError:
-            # Return a minimal fallback rather than crashing
-            return {
-                "mvp_scope": recommendation.first_steps,
-                "pain_point_evidence": [],
-                "competitive_landscape": [
-                    {"name": p, "weakness": "See GitHub issues for details"}
-                    for p in recommendation.similar_projects
-                ],
-                "integration_opportunities": [],
-                "success_metrics": [
-                    "10 active users in first month",
-                    "GitHub stars > 50 in 3 months",
-                    "At least 1 external contributor",
-                ],
-                "risks_and_mitigations": [
-                    {
-                        "risk": r,
-                        "mitigation": "Monitor early and adjust",
-                    }
-                    for r in recommendation.risk_factors[:3]
-                ],
-            }
+                # Return a minimal fallback rather than crashing
+                return {
+                    "mvp_scope": recommendation.first_steps,
+                    "pain_point_evidence": [],
+                    "competitive_landscape": [
+                        {"name": p, "weakness": "See GitHub issues for details"}
+                        for p in recommendation.similar_projects
+                    ],
+                    "integration_opportunities": [],
+                    "success_metrics": [
+                        "10 active users in first month",
+                        "GitHub stars > 50 in 3 months",
+                        "At least 1 external contributor",
+                    ],
+                    "risks_and_mitigations": [
+                        {
+                            "risk": r,
+                            "mitigation": "Monitor early and adjust",
+                        }
+                        for r in recommendation.risk_factors[:3]
+                    ],
+                }

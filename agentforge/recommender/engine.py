@@ -320,8 +320,10 @@ class RecommendationEngine:
 
         return self._parse_recommendation_set(data)
 
-    def _parse_recommendation_set(self, data: dict[str, Any]) -> RecommendationSet:
+    def _parse_recommendation_set(self, data: dict[str, Any] | list) -> RecommendationSet:
         """Parse the raw Claude JSON into a RecommendationSet."""
+        if isinstance(data, list):
+            data = {"recommendations": data}
         raw_recs: list[dict[str, Any]] = data.get("recommendations", [])
         recommendations: list[Recommendation] = []
 
