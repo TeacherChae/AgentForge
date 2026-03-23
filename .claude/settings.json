@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//home/keonheechae/**)",
+      "Bash(/home/keonheechae/.vscode-server/extensions/anthropic.claude-code-2.1.81-linux-x64/resources/native-binary/claude --help)"
+    ]
+  }
+}
